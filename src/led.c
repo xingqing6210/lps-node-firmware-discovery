@@ -34,9 +34,9 @@ void ledInit(void) {
 }
 
 void ledOn(Led led) {
-  HAL_GPIO_WritePin(LED_PORT, led, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(LED_PORT, led, GPIO_PIN_RESET);
 }
 
 void ledOff(Led led) {
-  HAL_GPIO_WritePin(LED_PORT, led, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(LED_PORT, led, GPIO_PIN_SET);
 }

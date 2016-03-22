@@ -9,10 +9,11 @@
 #include <stm32f0xx_hal_gpio.h>
 #endif
 
+//For DWM1000DISCOVERY Board -- Justin Add
 typedef enum {
-  ledRanging = GPIO_PIN_13,
-  ledSync = GPIO_PIN_14,
-  ledMode = GPIO_PIN_15
+  ledRanging = GPIO_PIN_10,
+  ledSync = GPIO_PIN_11,
+  ledMode = GPIO_PIN_12
 } Led;
 
 void ledInit(void);
