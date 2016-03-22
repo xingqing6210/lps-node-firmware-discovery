@@ -44,6 +44,11 @@
 
 #include "lps25h.h"
 
+//Justin add start
+#include "wifi_function.h"
+#include "wifi_config.h"
+//Justin add stop
+
 static CfgMode mode = modeAnchor;
 
 const uint8_t *uid = (uint8_t*)0x1FFFF7AC;
@@ -340,6 +345,7 @@ int main() {
   MX_GPIO_Init();
   MX_I2C1_Init();
   MX_USART1_UART_Init();
+  MX_USART2_UART_Init();//for esp8622 --Justin add
   MX_SPI1_Init();
   MX_USB_DEVICE_Init();
 
