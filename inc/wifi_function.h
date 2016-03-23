@@ -9,10 +9,11 @@
 #endif
 #include "wifi_config.h"
 #include <stdbool.h>
+#include "usart.h"
 
 
-#define     ESP8266_Usart( fmt, ... )           //USART1_printf ( USART1, fmt, ##__VA_ARGS__ ) 
-#define     PC_Usart( fmt, ... )                printf ( fmt, ##__VA_ARGS__ )
+#define     ESP8266_Usart( fmt, ... )           USART2_printf (fmt, ##__VA_ARGS__ ) 
+
 
 //#define     ESP8266_CH_HIGH_LEVEL()             GPIO_SetBits( GPIOC, GPIO_Pin_0 )
 #define     ESP8266_CH_HIGH_LEVEL()		HAL_GPIO_WritePin(GPIOC, 0, GPIO_PIN_SET);
