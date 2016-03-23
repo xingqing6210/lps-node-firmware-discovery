@@ -77,7 +77,7 @@ void ESP8266_AT_Test ( void )
  */
 bool ESP8266_Cmd ( char * cmd, char * reply1, char * reply2, uint32_t waittime )
 {    
-	strEsp8266_Fram_Record .InfBit .FramLength = 0;               //从新开始接收新的数据包
+	strEsp8266_Fram_Record.InfBit .FramLength = 0;               //从新开始接收新的数据包
 
 	ESP8266_Usart ( "%s\r\n", cmd );
 
@@ -88,19 +88,19 @@ bool ESP8266_Cmd ( char * cmd, char * reply1, char * reply2, uint32_t waittime )
 	
 	HAL_Delay( 1000 ); 
 	
-	strEsp8266_Fram_Record .Data_RX_BUF [ strEsp8266_Fram_Record .InfBit .FramLength ]  = '\0';
+	strEsp8266_Fram_Record.Data_RX_BUF [ strEsp8266_Fram_Record.InfBit .FramLength ]  = '\0';
 
-	PC_Usart ( "%s", strEsp8266_Fram_Record .Data_RX_BUF );
+	//PC_Usart ( "%s", strEsp8266_Fram_Record.Data_RX_BUF );
   
 	if ( ( reply1 != 0 ) && ( reply2 != 0 ) )
-		return ( ( bool ) strstr ( strEsp8266_Fram_Record .Data_RX_BUF, reply1 ) || 
-						 ( bool ) strstr ( strEsp8266_Fram_Record .Data_RX_BUF, reply2 ) ); 
+		return ( ( bool ) strstr ( strEsp8266_Fram_Record.Data_RX_BUF, reply1 ) || 
+						 ( bool ) strstr ( strEsp8266_Fram_Record.Data_RX_BUF, reply2 ) ); 
  	
 	else if ( reply1 != 0 )
-		return ( ( bool ) strstr ( strEsp8266_Fram_Record .Data_RX_BUF, reply1 ) );
+		return ( ( bool ) strstr ( strEsp8266_Fram_Record.Data_RX_BUF, reply1 ) );
 	
 	else
-		return ( ( bool ) strstr ( strEsp8266_Fram_Record .Data_RX_BUF, reply2 ) );
+		return ( ( bool ) strstr ( strEsp8266_Fram_Record.Data_RX_BUF, reply2 ) );
 	
 }
 
@@ -333,22 +333,22 @@ char * ESP8266_ReceiveString ( FunctionalState enumEnUnvarnishTx )
 {
 	char * pRecStr = 0;
 	
-	strEsp8266_Fram_Record .InfBit .FramLength = 0;
-	strEsp8266_Fram_Record .InfBit .FramFinishFlag = 0;
-	while ( ! strEsp8266_Fram_Record .InfBit .FramFinishFlag );
-	strEsp8266_Fram_Record .Data_RX_BUF [ strEsp8266_Fram_Record .InfBit .FramLength ] = '\0';
+	strEsp8266_Fram_Record.InfBit .FramLength = 0;
+	strEsp8266_Fram_Record.InfBit .FramFinishFlag = 0;
+	while ( ! strEsp8266_Fram_Record.InfBit .FramFinishFlag );
+	strEsp8266_Fram_Record.Data_RX_BUF [ strEsp8266_Fram_Record.InfBit .FramLength ] = '\0';
 	
 	if ( enumEnUnvarnishTx )
 	{
-		if ( strstr ( strEsp8266_Fram_Record .Data_RX_BUF, ">" ) )
-			pRecStr = strEsp8266_Fram_Record .Data_RX_BUF;
+		if ( strstr ( strEsp8266_Fram_Record.Data_RX_BUF, ">" ) )
+			pRecStr = strEsp8266_Fram_Record.Data_RX_BUF;
 
 	}
 	
 	else 
 	{
-		if ( strstr ( strEsp8266_Fram_Record .Data_RX_BUF, "+IPD" ) )
-			pRecStr = strEsp8266_Fram_Record .Data_RX_BUF;
+		if ( strstr ( strEsp8266_Fram_Record.Data_RX_BUF, "+IPD" ) )
+			pRecStr = strEsp8266_Fram_Record.Data_RX_BUF;
 
 	}
 
@@ -418,15 +418,15 @@ void Web_To_ESP(void)
 	HAL_Delay(1000);
 	do
 	{
-		strEsp8266_Fram_Record .InfBit .FramLength = 0;               //从新开始接收新的数据包
+		strEsp8266_Fram_Record.InfBit .FramLength = 0;               //从新开始接收新的数据包
 		for(i=0;i<2048;i++)
-			strEsp8266_Fram_Record .Data_RX_BUF[i]=0;                //清空数组	
+			strEsp8266_Fram_Record.Data_RX_BUF[i]=0;                //清空数组	
 		ESP8266_Usart ( "%s\r\n", "AT+CIPSTART=\"TCP\",\"192.168.1.103\",9000" );//注意这里需要填入：服务器IP地址和端口号	
 		HAL_Delay( 1000);                 //延时	
-		strEsp8266_Fram_Record .Data_RX_BUF [ strEsp8266_Fram_Record .InfBit .FramLength ]  = '\0';
-		PC_Usart ( "%s", strEsp8266_Fram_Record .Data_RX_BUF );
-      state= (( bool ) strstr ( strEsp8266_Fram_Record .Data_RX_BUF, "OK" )|( bool ) strstr ( strEsp8266_Fram_Record .Data_RX_BUF, "ALREAY CONNECT" ));
-		if(( bool ) strstr ( strEsp8266_Fram_Record .Data_RX_BUF, "ERROR" ))
+		strEsp8266_Fram_Record.Data_RX_BUF [ strEsp8266_Fram_Record.InfBit .FramLength ]  = '\0';
+		PC_Usart ( "%s", strEsp8266_Fram_Record.Data_RX_BUF );
+      state= (( bool ) strstr ( strEsp8266_Fram_Record.Data_RX_BUF, "OK" )|( bool ) strstr ( strEsp8266_Fram_Record.Data_RX_BUF, "ALREAY CONNECT" ));
+		if(( bool ) strstr ( strEsp8266_Fram_Record.Data_RX_BUF, "ERROR" ))
 			state=false; 		
 	}
 	while(state==false);
@@ -438,10 +438,10 @@ void Web_To_ESP(void)
 	ESP8266_SendString ( ENABLE, "User-Agent: abc\r\n",                                     0, Single_ID );
 	ESP8266_SendString ( ENABLE, "Connection: close\r\n",                                   0, Single_ID );
 	ESP8266_SendString ( ENABLE, "\r\n",                                                    0, Single_ID );
-	strEsp8266_Fram_Record .InfBit .FramLength = 0;
+	strEsp8266_Fram_Record.InfBit .FramLength = 0;
 	HAL_Delay(1200);
-	strEsp8266_Fram_Record .Data_RX_BUF [ strEsp8266_Fram_Record .InfBit .FramLength ] = '\0';
-	PC_Usart ("%s",strEsp8266_Fram_Record .Data_RX_BUF);
+	strEsp8266_Fram_Record.Data_RX_BUF [ strEsp8266_Fram_Record.InfBit .FramLength ] = '\0';
+	PC_Usart ("%s",strEsp8266_Fram_Record.Data_RX_BUF);
 }	
 ///***************************************************************************************/
 ////登陆或下线函数，第一次刷登陆，第二次刷下线
@@ -467,15 +467,15 @@ void login(uint8_t usr_Id)
 	HAL_Delay(500);
 	do
 	{
-		strEsp8266_Fram_Record .InfBit .FramLength = 0;               //从新开始接收新的数据包
+		strEsp8266_Fram_Record.InfBit .FramLength = 0;               //从新开始接收新的数据包
 		for(i=0;i<1024;i++)
-			strEsp8266_Fram_Record .Data_RX_BUF[i]=0;                //清空数组
+			strEsp8266_Fram_Record.Data_RX_BUF[i]=0;                //清空数组
 		ESP8266_Usart ( "%s\r\n", "AT+CIPSTART=\"TCP\",\"192.168.191.3\",8080");		
 		HAL_Delay( 1000);                 //延时	
-		strEsp8266_Fram_Record .Data_RX_BUF [ strEsp8266_Fram_Record .InfBit .FramLength ]  = '\0';
-		PC_Usart ( "%s", strEsp8266_Fram_Record .Data_RX_BUF );
-      state= ( bool ) strstr ( strEsp8266_Fram_Record .Data_RX_BUF, "OK" )||( bool ) strstr ( strEsp8266_Fram_Record .Data_RX_BUF, "ALREAY CONNECT" );
-		if(( bool ) strstr ( strEsp8266_Fram_Record .Data_RX_BUF, "ERROR" ))
+		strEsp8266_Fram_Record.Data_RX_BUF [ strEsp8266_Fram_Record.InfBit .FramLength ]  = '\0';
+		PC_Usart ( "%s", strEsp8266_Fram_Record.Data_RX_BUF );
+      state= ( bool ) strstr ( strEsp8266_Fram_Record.Data_RX_BUF, "OK" )||( bool ) strstr ( strEsp8266_Fram_Record.Data_RX_BUF, "ALREAY CONNECT" );
+		if(( bool ) strstr ( strEsp8266_Fram_Record.Data_RX_BUF, "ERROR" ))
 			state=false; 
 	
 	}
@@ -488,12 +488,12 @@ void login(uint8_t usr_Id)
 	ESP8266_SendString ( ENABLE, "Content-Length: 38\r\n",            0, Single_ID );
 	ESP8266_SendString ( ENABLE, "Connection: close\r\n",             0, Single_ID );
 	ESP8266_SendString ( ENABLE, "\r\n",                              0, Single_ID );
-	strEsp8266_Fram_Record .InfBit .FramLength = 0;
+	strEsp8266_Fram_Record.InfBit .FramLength = 0;
 	HAL_Delay(3000);
-	strEsp8266_Fram_Record .Data_RX_BUF [ strEsp8266_Fram_Record .InfBit .FramLength ] = '\0';
-	PC_Usart ("%s",strEsp8266_Fram_Record .Data_RX_BUF);
+	strEsp8266_Fram_Record.Data_RX_BUF [ strEsp8266_Fram_Record.InfBit .FramLength ] = '\0';
+	PC_Usart ("%s",strEsp8266_Fram_Record.Data_RX_BUF);
 	PC_Usart ("\r\n");
-	if((strstr(strEsp8266_Fram_Record .Data_RX_BUF,"OK"))!=NULL)
+	if((strstr(strEsp8266_Fram_Record.Data_RX_BUF,"OK"))!=NULL)
 		PC_Usart ("log in successfully\r\n");
 }	
 
@@ -514,16 +514,16 @@ void login(uint8_t usr_Id)
 //	HAL_Delay(500);
 //	do
 //	{
-//		strEsp8266_Fram_Record .InfBit .FramLength = 0;               //从新开始接收新的数据包
+//		strEsp8266_Fram_Record.InfBit .FramLength = 0;               //从新开始接收新的数据包
 //		for(i=0;i<1024;i++)
-//			strEsp8266_Fram_Record .Data_RX_BUF[i]=0;                //清空数组
+//			strEsp8266_Fram_Record.Data_RX_BUF[i]=0;                //清空数组
 //		sprintf(array,"AT+CIPSTART=\"TCP\",\"%s\",8080",IP);
 //		ESP8266_Usart ( "%s\r\n", array );		
 //		HAL_Delay( 1000);                 //延时	
-//		strEsp8266_Fram_Record .Data_RX_BUF [ strEsp8266_Fram_Record .InfBit .FramLength ]  = '\0';
-//		PC_Usart ( "%s", strEsp8266_Fram_Record .Data_RX_BUF );
-//      state= ( bool ) strstr ( strEsp8266_Fram_Record .Data_RX_BUF, "OK" )||( bool ) strstr ( strEsp8266_Fram_Record .Data_RX_BUF, "ALREAY CONNECT" );
-//		if(( bool ) strstr ( strEsp8266_Fram_Record .Data_RX_BUF, "ERROR" ))
+//		strEsp8266_Fram_Record.Data_RX_BUF [ strEsp8266_Fram_Record.InfBit .FramLength ]  = '\0';
+//		PC_Usart ( "%s", strEsp8266_Fram_Record.Data_RX_BUF );
+//      state= ( bool ) strstr ( strEsp8266_Fram_Record.Data_RX_BUF, "OK" )||( bool ) strstr ( strEsp8266_Fram_Record.Data_RX_BUF, "ALREAY CONNECT" );
+//		if(( bool ) strstr ( strEsp8266_Fram_Record.Data_RX_BUF, "ERROR" ))
 //			state=false; 
 //	
 //	}
@@ -537,10 +537,10 @@ void login(uint8_t usr_Id)
 //	ESP8266_SendString ( ENABLE, "Content-Length: 38\r\n",            NULL, Single_ID );
 //	ESP8266_SendString ( ENABLE, "Connection: close\r\n",             NULL, Single_ID );
 //	ESP8266_SendString ( ENABLE, "\r\n",                              NULL, Single_ID );
-//	strEsp8266_Fram_Record .InfBit .FramLength = 0;
+//	strEsp8266_Fram_Record.InfBit .FramLength = 0;
 //	HAL_Delay(1500);
-//	strEsp8266_Fram_Record .Data_RX_BUF [ strEsp8266_Fram_Record .InfBit .FramLength ] = '\0';
-//	if((strstr(strEsp8266_Fram_Record .Data_RX_BUF,"[{"))!=NULL)
+//	strEsp8266_Fram_Record.Data_RX_BUF [ strEsp8266_Fram_Record.InfBit .FramLength ] = '\0';
+//	if((strstr(strEsp8266_Fram_Record.Data_RX_BUF,"[{"))!=NULL)
 //		PC_Usart ("occupy successfully\r\n");
 //	else 
 //		PC_Usart ("failed\r\n");

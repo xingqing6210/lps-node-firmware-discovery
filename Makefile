@@ -26,7 +26,7 @@ HALS+=i2c_ex
 OBJS+=src/main.o
 OBJS+=src/usb_device.o src/usbd_cdc_if.o src/usbd_desc.o src/lps25h.o src/led.o src/cfg.o src/wifi_config.o src/wifi_function.o
 
-HALS+=gpio rcc cortex i2c pcd dma pcd_ex rcc_ex spi uart
+HALS+=gpio rcc cortex i2c pcd dma pcd_ex rcc_ex spi uart uart_ex
 OBJS+=$(foreach mod, $(HALS), $(HAL_ROOT)/Src/stm32$(CPU)xx_hal_$(mod).o)
 OBJS+=$(HAL_ROOT)/Src/stm32$(CPU)xx_hal.o
 

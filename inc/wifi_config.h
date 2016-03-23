@@ -46,9 +46,9 @@ typedef enum{
 
 #define RX_BUF_MAX_LEN     2048                                     
 
-extern struct  STRUCT_USARTx_Fram                                  //´®¿ÚÊı¾İÖ¡µÄ´¦Àí½á¹¹Ìå
+typedef struct  USARTx_Fram                                  //´®¿ÚÊı¾İÖ¡µÄ´¦Àí½á¹¹Ìå
 {
-  uint8_t Data_RX_BUF[ RX_BUF_MAX_LEN ];
+  uint8_t Data_RX_BUF[RX_BUF_MAX_LEN];
 	
   union {
     uint16_t InfAll;
@@ -57,14 +57,15 @@ extern struct  STRUCT_USARTx_Fram                                  //´®¿ÚÊı¾İÖ¡µ
 	uint16_t FramFinishFlag   :1;                                // 15 
     } InfBit;
   };
-} strPc_Fram_Record, strEsp8266_Fram_Record;
+} __attribute__((packed)) STRUCT_USARTx_Fram ;
 
+ STRUCT_USARTx_Fram strEsp8266_Fram_Record;
 
 //* º¯Êı */
-#define WiFi_RST_INIT                  GPIO_Config                //WiFiÊ¹ÓÃµÄESÒı½Å³õÊ¼»¯º¯Êı£¬ÍÆÍìÊä³ö 
-#define WiFi_USART1_INIT               USART1_Config              //WiFiÊ¹ÓÃµÄ´®¿Ú1³õÊ¼»¯º¯Êı£¬²¨ÌØÂÊ9600
-#define WiFi_USART2_INIT               USART2_Config              //WiFiÊ¹ÓÃµÄ´®¿Ú2³õÊ¼»¯º¯Êı£¬²¨ÌØÂÊ9600 
-#define WiFi_NVIC_INIT                 NVIC_Configuration         //NVICÖĞ¶ÏÅäÖÃ
+//#define WiFi_RST_INIT                  GPIO_Config                //WiFiÊ¹ÓÃµÄESÒı½Å³õÊ¼»¯º¯Êı£¬ÍÆÍìÊä³ö 
+//#define WiFi_USART1_INIT               USART1_Config              //WiFiÊ¹ÓÃµÄ´®¿Ú1³õÊ¼»¯º¯Êı£¬²¨ÌØÂÊ9600
+//#define WiFi_USART2_INIT               USART2_Config              //WiFiÊ¹ÓÃµÄ´®¿Ú2³õÊ¼»¯º¯Êı£¬²¨ÌØÂÊ9600 
+//#define WiFi_NVIC_INIT                 NVIC_Configuration         //NVICÖĞ¶ÏÅäÖÃ
 
 void WiFi_Config( void );
 void USART2_DMA_Config(uint32_t RxBuff);

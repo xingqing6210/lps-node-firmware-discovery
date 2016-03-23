@@ -34,6 +34,7 @@
 #include "stm32f0xx_hal.h"
 #include "stm32f0xx.h"
 #include "stm32f0xx_it.h"
+#include "usart.h"
 
 /* USER CODE BEGIN 0 */
 
@@ -85,6 +86,11 @@ void USB_IRQHandler(void)
 void EXTI0_1_IRQHandler(void)
 {
   HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_0);
+}
+
+void USART2_IRQHandler(void)
+{
+	HAL_UART_IRQHandler(&huart2);
 }
 
 /* USER CODE BEGIN 1 */

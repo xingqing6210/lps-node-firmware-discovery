@@ -47,6 +47,7 @@
 //Justin add start
 #include "wifi_function.h"
 #include "wifi_config.h"
+
 //Justin add stop
 
 static CfgMode mode = modeAnchor;
@@ -330,6 +331,11 @@ bool contains(int* list, int length, int value)
 dwDevice_t dwm_device;
 dwDevice_t *dwm = &dwm_device;
 
+//Justin add start
+#define RXBUFFERSIZE 2048
+uint8_t aRxBuffer[RXBUFFERSIZE];
+//Justin add stop
+
 int main() {
     /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
   HAL_Init();
@@ -348,6 +354,12 @@ int main() {
   MX_USART2_UART_Init();//for esp8622 --Justin add
   MX_SPI1_Init();
   MX_USB_DEVICE_Init();
+
+  //Justin add start
+  //Put UART2 peripheral in reception process 
+  HAL_UART_Receive_IT(&huart2, aRxBuffer, RXBUFFERSIZE);
+  ESP8266_init();
+  //Justin add stop
 
   // Light up all LEDs to test
   ledOn(ledRanging);
@@ -640,3 +652,22 @@ int _write (int fd, const void *buf, size_t count)
   HAL_UART_Transmit(&huart1, (uint8_t *)buf, count, HAL_MAX_DELAY);
   return count;
 }
+
+//Justin add start
+/**
+  * @brief  Rx Transfer completed callback
+  * @param  UartHandle: UART handle
+  * @note   This example shows a simple way to report end of DMA Rx transfer, and 
+  *         you can add your own implementation.
+  * @retval None
+  */
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *UartHandle)
+{
+  /* Set transmission flag: trasfer complete*/
+ printf("UART2 receive ESP8266 message, the number of data: %d\r\n", UartHandle -> RxXferCount);
+ memcpy(strEsp8266_Fram_Record.Data_RX_BUF,aRxBuffer,UartHandle -> RxXferCount);
+  strEsp8266_Fram_Record.InfBit.FramFinishFlag = 1;
+  strEsp8266_Fram_Record.InfBit.FramLength = UartHandle -> RxXferCount;
+
+}
+//Justin add stop

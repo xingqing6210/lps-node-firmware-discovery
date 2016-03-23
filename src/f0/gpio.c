@@ -107,6 +107,21 @@ void MX_GPIO_Init(void)
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
   HAL_GPIO_WritePin(GPIOB, GPIO_PIN_12, 1);
+
+  //For ESP8266 GPIO control -- Justin add start
+  /*Configure GPIO pins : PC0 for esp8266 CHPD, PC1 for RST, PC2 for GPIO0 */
+  GPIO_InitStruct.Pin = GPIO_PIN_0|GPIO_PIN_1|GPIO_PIN_2;//For DWM1000DISCOVERY Board -- Justin Add
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_HIGH;
+  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+
+  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_0, 1);//ESP8266 CHPD high
+  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_1, 0);//ESP8266 reset
+  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_2, 1);//ESP8266 GPIO0 low for flash boot
+  //Justin add end
+
+  
 }
 
 /* USER CODE BEGIN 2 */
