@@ -5,6 +5,6 @@
 //#include "bsp_usart2.h"
 #include  <stdlib.h>
 
-struct  STRUCT_USARTx_Fram strEsp8266_Fram_Record;
+
 
 /*********************************************************end of file**************************************************/

@@ -353,7 +353,7 @@ int main() {
   MX_USART1_UART_Init();
   MX_USART2_UART_Init();//for esp8622 --Justin add
   MX_SPI1_Init();
-  MX_USB_DEVICE_Init();
+  //MX_USB_DEVICE_Init();
 
   //Justin add start
   //Put UART2 peripheral in reception process 

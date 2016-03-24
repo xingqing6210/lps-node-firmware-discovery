@@ -83,6 +83,7 @@ void MX_USART2_UART_Init(void)
   huart2.Init.OneBitSampling = UART_ONEBIT_SAMPLING_DISABLED ;
   huart2.AdvancedInit.AdvFeatureInit = UART_ADVFEATURE_NO_INIT;
   HAL_UART_Init(&huart2);
+    printf("MX_USART2_UART_Init init\r\n");
 
 }
 //Justin add end
@@ -129,6 +130,7 @@ void HAL_UART_MspInit(UART_HandleTypeDef* huart)
     GPIO_InitStruct.Alternate = GPIO_AF1_USART1;
     HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
+
   /* USER CODE BEGIN USART1_MspInit 1 */
 
   /* USER CODE END USART1_MspInit 1 */
@@ -139,11 +141,13 @@ void HAL_UART_MspInit(UART_HandleTypeDef* huart)
 
   /* USER CODE END USART2_MspInit 0 */
     /* Peripheral clock enable */
-    __USART2_CLK_ENABLE();
+   //__USART2_CLK_ENABLE();
+  //__HAL_RCC_USART2_CLK_ENABLE();
+  SET_BIT(RCC->APB1ENR, RCC_APB1ENR_USART2EN);
   
-    /**USART3 GPIO Configuration    
-    PB10     ------> USART3_TX
-    PB11     ------> USART3_RX 
+    /**USART2 GPIO Configuration    
+    PA2     ------> USART2_TX
+    PA3     ------> USART2_RX 
     */
     GPIO_InitStruct.Pin = GPIO_PIN_2|GPIO_PIN_3;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
@@ -151,6 +155,7 @@ void HAL_UART_MspInit(UART_HandleTypeDef* huart)
     GPIO_InitStruct.Speed = GPIO_SPEED_HIGH;
     GPIO_InitStruct.Alternate = GPIO_AF1_USART2;
     HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+    printf("HAL_UART_MspInit USART2 GPIOA2 and A3 init\r\n");
 
   /* USER CODE BEGIN USART3_MspInit 1 */
 
@@ -174,6 +179,8 @@ void HAL_UART_MspInit(UART_HandleTypeDef* huart)
     GPIO_InitStruct.Speed = GPIO_SPEED_HIGH;
     GPIO_InitStruct.Alternate = GPIO_AF4_USART3;
     HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+	printf("USART3 GPIO init\r\n");
+
 
   /* USER CODE BEGIN USART3_MspInit 1 */
 
@@ -214,7 +221,7 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* huart)
     PB10     ------> USART3_TX
     PB11     ------> USART3_RX 
     */
-    HAL_GPIO_DeInit(GPIOA, GPIO_PIN_2|GPIO_PIN_13);
+    HAL_GPIO_DeInit(GPIOA, GPIO_PIN_2|GPIO_PIN_3);
 
   /* USER CODE BEGIN USART3_MspDeInit 1 */
 
