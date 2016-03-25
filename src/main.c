@@ -47,7 +47,9 @@
 //Justin add start
 #include "wifi_function.h"
 #include "wifi_config.h"
-
+#include "malloc.h"
+#include <stdlib.h>
+#include "cJSON.h"
 //Justin add stop
 
 static CfgMode mode = modeAnchor;
@@ -125,6 +127,11 @@ static int snifferPacketLength[QUEUE_LEN];
 static int queue_head = 0;
 static int queue_tail = 0;
 static volatile uint32_t dropped = 0;
+
+//Justin add start
+/* Used by some code below as an example datatype. */
+struct record {const char *precision;double lat,lon;const char *address,*city,*state,*zip,*country; };
+//Justin add stop
 
 // #define printf(...)
 #define debug(...)
@@ -344,6 +351,15 @@ int main() {
   char ch;
   bool selftestPasses = true;
 
+  //Justin add start
+  cJSON *root,*fld;
+  char *out;
+  struct record fields[2]={
+		{"zip",37.7668,-1.223959e+2,"","SAN FRANCISCO","CA","94107","US"},
+		{"zip",37.371991,-1.22026e+2,"","SUNNYVALE","CA","94085","US"}};
+
+  //Justin add stop
+
   /* Configure the system clock */
   SystemClock_Config();
 
@@ -356,13 +372,29 @@ int main() {
   //MX_USB_DEVICE_Init();
 
   //Justin add start
+  memInit();
+  root=cJSON_CreateArray();
+  for (i=0;i<2;i++)
+ {
+	cJSON_AddItemToArray(root,fld=cJSON_CreateObject());
+	cJSON_AddStringToObject(fld, "precision", fields[i].precision);
+	cJSON_AddNumberToObject(fld, "Latitude", fields[i].lat);
+	cJSON_AddNumberToObject(fld, "Longitude", fields[i].lon);
+	cJSON_AddStringToObject(fld, "Address", fields[i].address);
+	cJSON_AddStringToObject(fld, "City", fields[i].city);
+	cJSON_AddStringToObject(fld, "State", fields[i].state);
+	cJSON_AddStringToObject(fld, "Zip", fields[i].zip);
+	cJSON_AddStringToObject(fld, "Country", fields[i].country);
+ }
+  out=cJSON_Print(root);	cJSON_Delete(root);	printf("%s\n",out);	free(out);
+
   //Put UART2 peripheral in reception process 
   HAL_UART_Transmit(&huart2, (uint8_t *)"Justin", 6, HAL_MAX_DELAY);
   printf("Justin\r\n");
   HAL_UART_Transmit(&huart2, (uint8_t *)"Wendy", 6, HAL_MAX_DELAY);
   printf("Wendy\r\n");
   HAL_UART_Receive_IT(&huart2, aRxBuffer, RXBUFFERSIZE);
-  ESP8266_init();
+  //ESP8266_init();
   //Justin add stop
 
   // Light up all LEDs to test
