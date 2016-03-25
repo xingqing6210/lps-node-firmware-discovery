@@ -394,7 +394,10 @@ int main() {
   HAL_UART_Transmit(&huart2, (uint8_t *)"Wendy", 6, HAL_MAX_DELAY);
   printf("Wendy\r\n");
   HAL_UART_Receive_IT(&huart2, aRxBuffer, RXBUFFERSIZE);
-  //ESP8266_init();
+  printf("ESP init start\r\n");
+  ESP8266_init();
+  printf("Wendy\r\n");
+  printf("ESP init end\r\n");
   //Justin add stop
 
   // Light up all LEDs to test
