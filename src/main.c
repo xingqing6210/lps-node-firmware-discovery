@@ -357,6 +357,10 @@ int main() {
 
   //Justin add start
   //Put UART2 peripheral in reception process 
+  HAL_UART_Transmit(&huart2, (uint8_t *)"Justin", 6, HAL_MAX_DELAY);
+  printf("Justin\r\n");
+  HAL_UART_Transmit(&huart2, (uint8_t *)"Wendy", 6, HAL_MAX_DELAY);
+  printf("Wendy\r\n");
   HAL_UART_Receive_IT(&huart2, aRxBuffer, RXBUFFERSIZE);
   ESP8266_init();
   //Justin add stop
